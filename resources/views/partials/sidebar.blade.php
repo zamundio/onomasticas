@@ -11,7 +11,7 @@
                     <span class="title">@lang('global.app_dashboard')</span>
                 </a>
             </li>
-            
+
             @can('users_manage')
             <li class="treeview">
                 <a href="#">
@@ -57,7 +57,12 @@
                     <span class="title">Change password</span>
                 </a>
             </li>
-
+<li class="{{ $request->segment(1) == 'onomasticas' ? 'active' : '' }}">
+    <a href="{{ route('admin.onomasticas.index') }}">
+        <i class="fa fa-key"></i>
+        <span class="title">Onomasticas</span>
+    </a>
+</li>
             <li>
                 <a href="#logout" onclick="$('#logout').submit();">
                     <i class="fa fa-arrow-left"></i>

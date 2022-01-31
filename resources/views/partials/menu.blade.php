@@ -46,12 +46,22 @@
                     </ul>
                 </li>
             @endcan
+@can('onomasticas_show')
+            <li class="nav-item">
+                <a href="{{ route('admin.onomasticas.index') }}" class="nav-link {{ request()->is('onomasticas') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-fw fa-key">
+
+                    </i>
+                   Onomasticas
+                </a>
+            </li>
+@endcan
             <li class="nav-item">
                 <a href="{{ route('auth.change_password') }}" class="nav-link {{ request()->is('change_password') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-fw fa-key">
 
                     </i>
-                    Change Password
+              {{ trans('global.change_password') }}
                 </a>
             </li>
             <li class="nav-item">

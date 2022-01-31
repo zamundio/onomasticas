@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\meses;
+use App\añosemp;
+use Carbon\Carbon;
+use App\Onomasticas;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -25,6 +29,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $onomasticas = Onomasticas::all()->count();
+        $cumples= Onomasticas::where('CUMP',Carbon::now()->month+1)->count();
+        $arrayaños =añosemp::select('Id')->get();
+        $años= Onomasticas::whereIn('AÑOSEMP', $arrayaños)->count();
+        return view('home',compact('onomasticas','cumples','años'));
     }
+
 }

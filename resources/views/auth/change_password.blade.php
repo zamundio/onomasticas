@@ -12,7 +12,7 @@
             @csrf
             @method('PATCH')
             <div class="form-group {{ $errors->has('current_password') ? 'has-error' : '' }}">
-                <label for="current_password">Current password*</label>
+                <label for="current_password">Password Actual</label>
                 <input type="password" id="current_password" name="current_password" class="form-control">
                 @if($errors->has('current_password'))
                     <em class="invalid-feedback">
@@ -21,7 +21,7 @@
                 @endif
             </div>
             <div class="form-group {{ $errors->has('new_password') ? 'has-error' : '' }}">
-                <label for="new_password">New password*</label>
+                <label for="new_password">Nuevo Password*</label>
                 <input type="password" id="new_password" name="new_password" class="form-control">
                 @if($errors->has('new_password'))
                     <em class="invalid-feedback">
@@ -30,7 +30,7 @@
                 @endif
             </div>
             <div class="form-group {{ $errors->has('new_password_confirmation') ? 'has-error' : '' }}">
-                <label for="new_password_confirmation">New password confirmation*</label>
+                <label for="new_password_confirmation"></label>Confirme Nuevo Password*</label>
                 <input type="password" id="new_password_confirmation" name="new_password_confirmation" class="form-control">
                 @if($errors->has('new_password_confirmation'))
                     <em class="invalid-feedback">

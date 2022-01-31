@@ -1,10 +1,31 @@
 @extends('layouts.auth')
 @section('content')
+<style type="text/css">
+    .login-page {
+        background: url("{{ asset("assets/images/ff.png") }}") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+.card-group {
+background-color: white;
+width: 50%;
+height: 50%;
+}
+
+</style>
 <div class="row justify-content-center">
+<div class="col-md-5">
+    <div class="login-logo">
+        <div class="login-logo">
+            <img src="{{ asset("assets/images/cupcake2.png") }}" class="rounded mx-auto d-block">
+        </div>
+    </div>
     <div class="col-md-8">
-        <div class="card-group">
-            <div class="card p-4">
-                <div class="card-body">
+
+        <div class="card-body">
+            <div class="card-group mx-auto" style="width: 25rem">
+                <div class="card p-4">
+
                     @if(\Session::has('message'))
                         <p class="alert alert-info">
                             {{ \Session::get('message') }}
@@ -12,7 +33,7 @@
                     @endif
                     <form method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
-                        <h1>{{ trans('panel.site_title') }}</h1>
+                        <img src="{{ asset("assets/images/logo_trans.png") }}">
                         <p class="text-muted">{{ trans('global.login') }}</p>
 
                         <div class="input-group mb-3">
@@ -68,5 +89,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

@@ -21,6 +21,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet" type="text/css">
     @yield('styles')
 </head>
 
@@ -38,6 +39,7 @@
         </button>
 
         <ul class="nav navbar-nav ml-auto">
+
             @if(count(config('panel.available_languages', [])) > 1)
                 <li class="nav-item dropdown d-md-down-none">
                     <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -88,8 +90,9 @@
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://unpkg.com/@coreui/coreui@2.1.16/dist/js/coreui.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -108,95 +111,148 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
     <script>
-        $(function() {
-  let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
-  let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
-  let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
-  let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
-  let printButtonTrans = '{{ trans('global.datatables.print') }}'
-  let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
+        $(function () {
+            let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
+            let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
+            let excelButtonTrans = '{{ trans('global.datatables.excelono') }}'
+            let excelButtonTrans2 = '{{ trans('global.datatables.excelaños') }}'
+            let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
+            let printButtonTrans = '{{ trans('global.datatables.print') }}'
+            let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
+            let languages = {
+                'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json',
+                "es": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            };
+            $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
+                className: 'btn'
+            })
+            $.extend(true, $.fn.dataTable.defaults, {
+                language: {
+                    url: languages['{{app()->getLocale()}}']
+                },
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                }],
+                select: {
+                    style: 'multi+shift',
+                    selector: 'td:first-child'
+                },
+                order: [],
+                scrollX: true,
+                pageLength: 20,
+                dom: 'lBfrtip<"actions">',
+                buttons: [{
+                        extend: 'copy',
+                        className: 'btn-default',
+                        text: copyButtonTrans,
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'btn-default',
+                        text: csvButtonTrans,
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn-default',
+                        text: excelButtonTrans,
+                        title: 'Onomasticas',
+                        exportOptions: {
+                            columns: [4, 5, 8, 10, 9, 11, 13, 14, 15, 16,1, 7],
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn-default',
+                        text: excelButtonTrans2,
+                        title: 'Antiguedad',
+                        exportOptions: {
+                            columns: [4, 5, 8, 10, 9, 11, 12, 15, 16, 1, 7,17,13],
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn-default',
+                        text: pdfButtonTrans,
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                selected: true
+                            }
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn-default',
+                        text: printButtonTrans,
+                        customize: function (win) {
 
-  let languages = {
-    'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json'
-  };
+                            var last = null;
+                            var current = null;
+                            var bod = [];
 
-  $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn' })
-  $.extend(true, $.fn.dataTable.defaults, {
-    language: {
-      url: languages['{{ app()->getLocale() }}']
-    },
-    columnDefs: [{
-        orderable: false,
-        className: 'select-checkbox',
-        targets: 0
-    }, {
-        orderable: false,
-        searchable: false,
-        targets: -1
-    }],
-    select: {
-      style:    'multi+shift',
-      selector: 'td:first-child'
-    },
-    order: [],
-    scrollX: true,
-    pageLength: 100,
-    dom: 'lBfrtip<"actions">',
-    buttons: [
-      {
-        extend: 'copy',
-        className: 'btn-default',
-        text: copyButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'csv',
-        className: 'btn-default',
-        text: csvButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'excel',
-        className: 'btn-default',
-        text: excelButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'pdf',
-        className: 'btn-default',
-        text: pdfButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'print',
-        className: 'btn-default',
-        text: printButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'colvis',
-        className: 'btn-default',
-        text: colvisButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      }
-    ]
-  });
+                            var css = '@page { size: landscape; }',
+                                head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                style = win.document.createElement('style');
 
-  $.fn.dataTable.ext.classes.sPageButton = '';
-});
+                            style.type = 'text/css';
+                            style.media = 'print';
+
+                            if (style.styleSheet) {
+                                style.styleSheet.cssText = css;
+                            } else {
+                                style.appendChild(win.document.createTextNode(css));
+                            }
+
+                            head.appendChild(style);
+                        },
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                selected: true
+                            }
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        className: 'btn-default',
+                        text: colvisButtonTrans,
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    }
+                ],
+                select: true
+            });
+
+            $.fn.dataTable.ext.classes.sPageButton = '';
+        });
 
     </script>
     @yield('scripts')
