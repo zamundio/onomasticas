@@ -81,6 +81,9 @@
                         <th>
                             {{ trans('global.onomasticas.fields.mail') }}
                         </th>
+                         <th>
+                             {{ trans('global.onomasticas.fields.dni') }}
+                         </th>
                         <th>
                             {{ trans('global.onomasticas.fields.dir') }}
                         </th>
@@ -151,6 +154,9 @@
                             </td>
                             <td>
                                 {{ $onomastica->mail ?? '' }}
+                            </td>
+                            <td>
+                                {{ $onomastica->DNI ?? '' }}
                             </td>
                             <td>
                                 {{ $onomastica->Direccion ?? '' }}
@@ -251,7 +257,12 @@
             columnDefs: [{
                 width: 10,
                 targets: 1
-            }, {
+            },{
+                width: 10,
+                targets: 9,
+				visible:false
+            },
+			{
                 width: 10,
                 targets: 10
             }].concat($.fn.dataTable.defaults.columnDefs),
@@ -262,6 +273,8 @@
                 selector: 'td:first-child'
             }
         });
+
+
 
         $(".selectAll").on("click", function (e) {
             if ($(this).is(":checked")) {
@@ -306,7 +319,7 @@
 
             console.log(groupNameFilterApplied.join('|'));
 
-            $('#onomasticas').DataTable().column(14).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas').DataTable().column(15).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
         });
@@ -319,10 +332,9 @@
             });
 
 
-
             console.log(groupNameFilterApplied.join('|'));
 
-            $('#onomasticas').DataTable().column(17).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas').DataTable().column(18).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
         });
@@ -338,7 +350,7 @@
 
           console.log(groupNameFilterApplied.join('|'));
 
-          $('#onomasticas').DataTable().column(13).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+          $('#onomasticas').DataTable().column(14).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
           });
