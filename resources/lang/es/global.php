@@ -83,6 +83,8 @@ return [
             'Linea_at_helper'  => '',
             'mail'         => 'Email',
             'mail_helper'  => '',
+			'dni'         => 'DNI',
+            'dni_helper'  => '',
             'dir'         => 'Direccion',
             'dir_helper'  => '',
             'pob'         => 'Poblacion',
