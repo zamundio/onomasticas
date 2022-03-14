@@ -172,7 +172,7 @@
                         text: excelButtonTrans,
                         title: 'Onomasticas',
                         exportOptions: {
-                            columns: [4, 5, 8,9, 10, 11, 13, 14, 16,17,1, 7],
+                            columns: [4, 5, 8,9, 10, 11, 13, 15, 16,17,1, 7],
                             modifier: {
                                 selected: null
                             }
