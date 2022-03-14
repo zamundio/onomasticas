@@ -172,11 +172,7 @@
                         text: excelButtonTrans,
                         title: 'Onomasticas',
                         exportOptions: {
-<<<<<<< HEAD
-                            columns: [4, 5, 8, 10, 11,12, 13, 14, 15, 16,17,1, 7],
-=======
-                            columns: [4, 5, 8,9, 10, 11, 13, 14, 15, 16,1, 7],
->>>>>>> 91335ea01f24b87432c705f93596c0d152167b8c
+                            columns: [4, 5, 8,9, 10, 11, 13, 14, 16,17,1, 7],
                             modifier: {
                                 selected: null
                             }
@@ -188,11 +184,7 @@
                         text: excelButtonTrans2,
                         title: 'Antiguedad',
                         exportOptions: {
-<<<<<<< HEAD
                             columns: [4, 5, 8,9,10, 11, 12,13,14,17,18,1, 7],
-=======
-                            columns: [4, 5, 8,9,10, 11, 12, 15, 16, 1, 7,17,13],
->>>>>>> 91335ea01f24b87432c705f93596c0d152167b8c
                             modifier: {
                                 selected: null
                             }
