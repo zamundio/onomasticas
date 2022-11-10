@@ -64,7 +64,8 @@
                             {{ trans('global.onomasticas.fields.NombreGA') }}
                         </th>
                         <th>
-                            {{ trans('global.onomasticas.fields.id') }}
+                            C
+                            {{-- {{ trans('global.onomasticas.fields.id') }} --}}
                         </th>
                         <th>
                             {{ trans('global.onomasticas.fields.ApellidosRep') }}
@@ -72,11 +73,11 @@
                         <th>
                             {{ trans('global.onomasticas.fields.NombreRep') }}
                         </th>
-                        <th>
+                       {{--  <th>
                             {{ trans('global.onomasticas.fields.Codigo_Linea') }}
-                        </th>
+                        </th> --}}
                         <th>
-                            {{ trans('global.onomasticas.fields.Linea') }}
+                               {{ trans('global.onomasticas.fields.Codigo_Linea') }}
                         </th>
                         <th>
                             {{ trans('global.onomasticas.fields.mail') }}
@@ -104,7 +105,8 @@
                             {{ trans('global.onomasticas.fields.F_Nac') }}
                         </th>
                         <th>
-                            {{ trans('global.onomasticas.fields.EDAD') }}
+                            E
+                            {{-- {{ trans('global.onomasticas.fields.EDAD') }} --}}
                         </th>
                         <th>
                             {{ trans('global.onomasticas.fields.Movil') }}
@@ -113,7 +115,8 @@
                             {{ trans('global.onomasticas.fields.AÑOSEMP') }}
                         </th>
                         <th>
-                            {{ trans('global.onomasticas.fields.CUMP') }}
+                            {{-- {{ trans('global.onomasticas.fields.CUMP') }} --}}
+                            Ono
                         </th>
                     </tr>
                 </thead>
@@ -124,10 +127,10 @@
 
                             </td>
                             <td>
-                                {{ $onomastica->NombreJV ?? '' }}
+                                {{ Illuminate\Support\Str::limit($onomastica->NombreJV,7) ?? '' }}
                             </td>
                             <td>
-                                {{ $onomastica->NombreGA ?? '' }}
+                                {{ Illuminate\Support\Str::limit($onomastica->NombreGA, 10) ?? '' }}
                             </td>
                             <td>
                                 {{ $onomastica->id ?? '' }}
@@ -146,9 +149,9 @@
 
 
                             </td>
-                            <td>
+                          {{--   <td>
                                 {{ $onomastica->Codigo_Linea ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 {{ $onomastica->Linea ?? '' }}
                             </td>
@@ -253,18 +256,55 @@
 
 
         var table = $('#onomasticas').DataTable({
-            "pageLength": 20,
+            "pageLength":12,
             columnDefs: [{
-                width: 10,
+                width: 50,
                 targets: 1
-            },{
-                width: 10,
-                targets: 9,
-				visible:false
             },
+
+            {
+            width: 60,
+            targets: 2
+            },
+             {
+             width: 120,
+             targets: 4
+             },
+              {
+              width: 90,
+              targets: 5
+              },
+              {
+              width: 110,
+              targets: 6
+              },
+               {
+               width: 100,
+               targets: 7
+               },
+            {
+                width: 150,
+                targets: 9,
+				visible:true
+            },
+             {
+             width: 120,
+             targets: 10,
+             visible:true
+             },
+             {
+             width: 10,
+             targets: 17,
+             visible:true
+             },
+             {
+             width: 10,
+             targets: 18,
+             visible:true
+             },
 			{
-                width: 10,
-                targets: 10
+                width: 60,
+                targets: 12
             }].concat($.fn.dataTable.defaults.columnDefs),
 
             buttons: dtButtons,
