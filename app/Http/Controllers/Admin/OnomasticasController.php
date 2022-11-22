@@ -23,7 +23,7 @@ class OnomasticasController extends Controller
 
         $onomasticas = Onomasticas::all();
         $ComboJV=lineas::All();
-        $ComboMeses = meses::All();
+        $ComboMeses = meses::orderBy('Id') ->get();
         $AñosEmp = añosemp::orderBy('Id') ->get();
 
         return view('admin.onomasticas.index', compact('onomasticas', 'ComboJV','ComboMeses', 'AñosEmp'));

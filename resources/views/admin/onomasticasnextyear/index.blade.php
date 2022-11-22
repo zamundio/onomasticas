@@ -3,7 +3,7 @@
 @can('onomasticas_show')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <select class="form-control" multiple title="Linea" data-style="form-control" id="SelectJV" name="linea[]" data-live-search=" true">
+            <select class="form-control" multiple title="Linea" data-style="form-control" id="SelectJV_ny" name="linea[]" data-live-search=" true">
                 <option data-tokens="*"> </option>
                 <?php
                                 foreach ($ComboJV as $key => $value) {
@@ -11,7 +11,7 @@
                                 }
                                 ?>
             </select>
-            <select class="form-control" multiple title="Mes Onomastica" data-style="form-control" id="SelectMeses" name="meses[]" data-live-search=" true">
+            <select class="form-control" multiple title="Mes Onomastica" data-style="form-control" id="SelectMeses_ny" name="meses[]" data-live-search=" true">
                 <option data-tokens="*"> </option>
                 <?php
                                 foreach ($ComboMeses as $key => $value) {
@@ -19,7 +19,7 @@
                                 }
                                 ?>
             </select>
-            <select class="form-control" multiple title="Años en la Empresa" data-style="form-control" id="SelectAños" name="años[]" data-live-search=" true">
+            <select class="form-control" multiple title="Años en la Empresa" data-style="form-control" id="SelectAños_ny" name="años[]" data-live-search=" true">
                 <option data-tokens="*"> </option>
                 <?php
                                 foreach ($AñosEmp as $key => $value) {
@@ -28,7 +28,7 @@
                                 ?>
 
             </select>
-         <select class="form-control" multiple title="Mes Alta Empresa" data-style="form-control" id="SelectMesesEmp" name="mesesemp[]" data-live-search=" true">
+         <select class="form-control" multiple title="Mes Alta Empresa" data-style="form-control" id="SelectMesesEmp_ny" name="mesesemp[]" data-live-search=" true">
              <option data-tokens="*"> </option>
              <?php
                                 foreach ($ComboMeses as $key => $value) {
@@ -51,7 +51,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="onomasticas" class=" table table-bordered table-striped table-hover datatable display select">
+            <table id="onomasticas_nextyear" class=" table table-bordered table-striped table-hover datatable display select">
                 <thead>
                     <tr>
                         <th class="col-xs-1">
@@ -73,9 +73,9 @@
                         <th>
                             {{ trans('global.onomasticas.fields.NombreRep') }}
                         </th>
-                       {{--  <th>
+                        <th>
                             {{ trans('global.onomasticas.fields.Codigo_Linea') }}
-                        </th> --}}
+                        </th>
                         <th>
                                {{ trans('global.onomasticas.fields.Codigo_Linea') }}
                         </th>
@@ -118,6 +118,10 @@
                             {{-- {{ trans('global.onomasticas.fields.CUMP') }} --}}
                             Ono
                         </th>
+                         <th>
+                             {{-- {{ trans('global.onomasticas.fields.CUMP') }} --}}
+                             Mes Alta
+                         </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,9 +153,9 @@
 
 
                             </td>
-                          {{--   <td>
+                            <td>
                                 {{ $onomastica->Codigo_Linea ?? '' }}
-                            </td> --}}
+                            </td>
                             <td>
                                 {{ $onomastica->Linea ?? '' }}
                             </td>
@@ -191,6 +195,9 @@
                             <td>
                                 {{ $onomastica->CUMP ?? '' }}
                             </td>
+                             <td>
+                                 {{ $onomastica->MESALTA ?? '' }}
+                             </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -205,25 +212,25 @@
     $(document).ready(function () {
 
 
-        $('#SelectJV').multiselect({
+        $('#SelectJV_ny').multiselect({
             nonSelectedText: 'Linea',
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
             buttonWidth: '100px'
         });
-        $('#SelectMeses').multiselect({
+        $('#SelectMeses_ny').multiselect({
             nonSelectedText: 'Mes Onomastica',
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
             buttonWidth: '200px'
         });
-        $('#SelectAños').multiselect({
+        $('#SelectAños_ny').multiselect({
             nonSelectedText: 'Años Emp',
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
             buttonWidth: '150px'
         });
-        $('#SelectMesesEmp').multiselect({
+        $('#SelectMesesEmp_ny').multiselect({
         nonSelectedText: 'Mes Alta  Emp',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true,
@@ -255,7 +262,7 @@
 
 
 
-        var table = $('#onomasticas').DataTable({
+        var table = $('#onomasticas_nextyear').DataTable({
             "pageLength":12,
             columnDefs: [{
                 width: 50,
@@ -276,7 +283,8 @@
               },
               {
               width: 110,
-              targets: 6
+              targets: 6,
+              visible:false
               },
                {
                width: 100,
@@ -302,6 +310,11 @@
              targets: 18,
              visible:true
              },
+               {
+               width: 10,
+               targets: 20,
+               visible:false
+               },
 			{
                 width: 60,
                 targets: 12
@@ -325,17 +338,17 @@
         });
 
 
-        $("#onomasticas_filter.dataTables_filter").append($("#SelectJV"));
+        $("#onomasticas_filter.dataTables_filter").append($("#SelectJV_ny"));
 
-        $("#onomasticas_filter.dataTables_filter").append($("#SelectMeses"));
-        $("#onomasticas_filter.dataTables_filter").append($("#SelectAños"));
-         $("#onomasticas_filter.dataTables_filter").append($("#SelectMesesEmp"));
+        $("#onomasticas_filter.dataTables_filter").append($("#SelectMeses_ny"));
+        $("#onomasticas_filter.dataTables_filter").append($("#SelectAños_ny"));
+         $("#onomasticas_filter.dataTables_filter").append($("#SelectMesesEmp_ny"));
 
-        $("#SelectJV").on('change', function () {
+        $("#SelectJV_ny").on('change', function () {
 
 
             var groupNameFilterApplied = [];
-            $('#SelectJV :selected').each(function () {
+            $('#SelectJV_ny :selected').each(function () {
                 groupNameFilterApplied.push($(this).val());
             });
 
@@ -343,54 +356,55 @@
 
 
 
-            $('#onomasticas').DataTable().column(6).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas_nextyear').DataTable().column(6).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
         });
-        $("#SelectMeses").on('change', function () {
+        $("#SelectMeses_ny").on('change', function () {
 
 
             var groupNameFilterApplied = [];
-            $('#SelectMeses :selected').each(function () {
-                groupNameFilterApplied.push("/" + $(this).val() + "/");
+            $('#SelectMeses_ny :selected').each(function () {
+                   groupNameFilterApplied.push("^" + $(this).val() + "$");
             });
 
 
 
             console.log(groupNameFilterApplied.join('|'));
 
-            $('#onomasticas').DataTable().column(15).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas_nextyear').DataTable().column(19).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
         });
-        $("#SelectAños").on('change', function () {
+        $("#SelectAños_ny").on('change', function () {
 
 
             var groupNameFilterApplied = [];
-            $('#SelectAños :selected').each(function () {
+            $('#SelectAños_ny :selected').each(function () {
                 groupNameFilterApplied.push("^" + $(this).val() + "$");
             });
 
 
             console.log(groupNameFilterApplied.join('|'));
 
-            $('#onomasticas').DataTable().column(18).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas_nextyear').DataTable().column(18).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
         });
-          $("#SelectMesesEmp").on('change', function () {
+          $("#SelectMesesEmp_ny").on('change', function () {
 
 
           var groupNameFilterApplied = [];
-          $('#SelectMesesEmp :selected').each(function () {
-          groupNameFilterApplied.push("/" + $(this).val() + "/");
+          $('#SelectMesesEmp_ny :selected').each(function () {
+        //   groupNameFilterApplied.push("/" + $(this).val() + "/");
+        groupNameFilterApplied.push("^" + $(this).val() + "$");
           });
 
 
 
           console.log(groupNameFilterApplied.join('|'));
 
-          $('#onomasticas').DataTable().column(14).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+          $('#onomasticas_nextyear').DataTable().column(20).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
           });

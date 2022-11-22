@@ -1,7 +1,9 @@
 <?php
 
+use App\meses;
 use App\añosemp;
 use App\Onomasticas;
 use Illuminate\Foundation\Inspiring;
 
-$onomasticas = Onomasticas::all();
+$ComboMeses = meses::orderBy('Id')->get();
+

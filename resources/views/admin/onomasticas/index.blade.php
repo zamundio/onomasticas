@@ -64,7 +64,7 @@
                             {{ trans('global.onomasticas.fields.NombreGA') }}
                         </th>
                         <th>
-                            C
+
                             {{-- {{ trans('global.onomasticas.fields.id') }} --}}
                         </th>
                         <th>
@@ -73,9 +73,9 @@
                         <th>
                             {{ trans('global.onomasticas.fields.NombreRep') }}
                         </th>
-                       {{--  <th>
-                            {{ trans('global.onomasticas.fields.Codigo_Linea') }}
-                        </th> --}}
+                        <th>
+                            {{-- {{ trans('global.onomasticas.fields.Codigo_Linea') }} --}}
+                        </th>
                         <th>
                                {{ trans('global.onomasticas.fields.Codigo_Linea') }}
                         </th>
@@ -118,6 +118,10 @@
                             {{-- {{ trans('global.onomasticas.fields.CUMP') }} --}}
                             Ono
                         </th>
+                         <th>
+                             {{-- {{ trans('global.onomasticas.fields.CUMP') }} --}}
+                             MesAlta
+                         </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,9 +153,9 @@
 
 
                             </td>
-                          {{--   <td>
+                            <td>
                                 {{ $onomastica->Codigo_Linea ?? '' }}
-                            </td> --}}
+                            </td>
                             <td>
                                 {{ $onomastica->Linea ?? '' }}
                             </td>
@@ -191,6 +195,9 @@
                             <td>
                                 {{ $onomastica->CUMP ?? '' }}
                             </td>
+                             <td>
+                                 {{ $onomastica->MESALTA ?? '' }}
+                             </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -275,8 +282,9 @@
               targets: 5
               },
               {
-              width: 110,
-              targets: 6
+              width: 0,
+              targets: 6,
+              visible:false
               },
                {
                width: 100,
@@ -302,6 +310,11 @@
              targets: 18,
              visible:true
              },
+               {
+               width: 10,
+               targets: 20,
+               visible:false
+               },
 			{
                 width: 60,
                 targets: 12
@@ -337,11 +350,12 @@
             var groupNameFilterApplied = [];
             $('#SelectJV :selected').each(function () {
                 groupNameFilterApplied.push($(this).val());
+
             });
 
 
 
-
+  console.log(groupNameFilterApplied.join('|'));
 
             $('#onomasticas').DataTable().column(6).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
@@ -352,14 +366,17 @@
 
             var groupNameFilterApplied = [];
             $('#SelectMeses :selected').each(function () {
-                groupNameFilterApplied.push("/" + $(this).val() + "/");
+                // groupNameFilterApplied.push("/" + $(this).val() + "/");
+                   groupNameFilterApplied.push("^" + $(this).val() + "$");
             });
 
 
 
             console.log(groupNameFilterApplied.join('|'));
 
-            $('#onomasticas').DataTable().column(15).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+            $('#onomasticas').DataTable().column(19).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+  console.log($('#onomasticas').DataTable().column(1).header().textContent);
+
 
 
         });
@@ -383,14 +400,15 @@
 
           var groupNameFilterApplied = [];
           $('#SelectMesesEmp :selected').each(function () {
-          groupNameFilterApplied.push("/" + $(this).val() + "/");
+        //   groupNameFilterApplied.push("/" + $(this).val() + "/");
+             groupNameFilterApplied.push("^" + $(this).val() + "$");
           });
 
 
-
+ console.log($('#onomasticas').DataTable().column(20).header().textContent);
           console.log(groupNameFilterApplied.join('|'));
 
-          $('#onomasticas').DataTable().column(14).search(groupNameFilterApplied.join('|'), true, false, true).draw();
+          $('#onomasticas').DataTable().column(20).search(groupNameFilterApplied.join('|'), true, false, true).draw();
 
 
           });
